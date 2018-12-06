@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EmpleadoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewEmpleadoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EmpleadoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EmpleadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{empleadoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoId}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoId}" title="#{myBundle.ViewEmpleadoTitle_empleadoId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoPrimerNombre}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoPrimerNombre}" title="#{myBundle.ViewEmpleadoTitle_empleadoPrimerNombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoSegundoNombre}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoSegundoNombre}" title="#{myBundle.ViewEmpleadoTitle_empleadoSegundoNombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoPrimerApellido}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoPrimerApellido}" title="#{myBundle.ViewEmpleadoTitle_empleadoPrimerApellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoSegundoApellido}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoSegundoApellido}" title="#{myBundle.ViewEmpleadoTitle_empleadoSegundoApellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoTipoDni}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoTipoDni}" title="#{myBundle.ViewEmpleadoTitle_empleadoTipoDni}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoDni}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoDni}" title="#{myBundle.ViewEmpleadoTitle_empleadoDni}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoEstadoCivil}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoEstadoCivil}" title="#{myBundle.ViewEmpleadoTitle_empleadoEstadoCivil}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoNombreConyugue}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoNombreConyugue}" title="#{myBundle.ViewEmpleadoTitle_empleadoNombreConyugue}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoSexo}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoSexo}" title="#{myBundle.ViewEmpleadoTitle_empleadoSexo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoFechaCreacion}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoFechaCreacion}" title="#{myBundle.ViewEmpleadoTitle_empleadoFechaCreacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoFechaModificacion}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoFechaModificacion}" title="#{myBundle.ViewEmpleadoTitle_empleadoFechaModificacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoEstado}"/>
+                            <h:outputText value="#{empleadoController.selected.empleadoEstado}" title="#{myBundle.ViewEmpleadoTitle_empleadoEstado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_cargoId}"/>
+                            <h:outputText value="#{empleadoController.selected.cargoId.cargoDescripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpleadoLabel_empresaId}"/>
+                            <h:outputText value="#{empleadoController.selected.empresaId.empresaId}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

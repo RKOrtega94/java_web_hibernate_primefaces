@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoCreateDlg" widgetVar="EmpleadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="EmpleadoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{empleadoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoPrimerNombre}" for="empleadoPrimerNombre" />
+                        <p:inputText id="empleadoPrimerNombre" value="#{empleadoController.selected.empleadoPrimerNombre}" title="#{myBundle.CreateEmpleadoTitle_empleadoPrimerNombre}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoSegundoNombre}" for="empleadoSegundoNombre" />
+                        <p:inputText id="empleadoSegundoNombre" value="#{empleadoController.selected.empleadoSegundoNombre}" title="#{myBundle.CreateEmpleadoTitle_empleadoSegundoNombre}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoPrimerApellido}" for="empleadoPrimerApellido" />
+                        <p:inputText id="empleadoPrimerApellido" value="#{empleadoController.selected.empleadoPrimerApellido}" title="#{myBundle.CreateEmpleadoTitle_empleadoPrimerApellido}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoSegundoApellido}" for="empleadoSegundoApellido" />
+                        <p:inputText id="empleadoSegundoApellido" value="#{empleadoController.selected.empleadoSegundoApellido}" title="#{myBundle.CreateEmpleadoTitle_empleadoSegundoApellido}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoTipoDni}" for="empleadoTipoDni" />
+                        <p:inputText id="empleadoTipoDni" value="#{empleadoController.selected.empleadoTipoDni}" title="#{myBundle.CreateEmpleadoTitle_empleadoTipoDni}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoDni}" for="empleadoDni" />
+                        <p:inputText id="empleadoDni" value="#{empleadoController.selected.empleadoDni}" title="#{myBundle.CreateEmpleadoTitle_empleadoDni}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoEstadoCivil}" for="empleadoEstadoCivil" />
+                        <p:inputText id="empleadoEstadoCivil" value="#{empleadoController.selected.empleadoEstadoCivil}" title="#{myBundle.CreateEmpleadoTitle_empleadoEstadoCivil}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoNombreConyugue}" for="empleadoNombreConyugue" />
+                        <p:inputTextarea rows="4" cols="30" id="empleadoNombreConyugue" value="#{empleadoController.selected.empleadoNombreConyugue}" title="#{myBundle.CreateEmpleadoTitle_empleadoNombreConyugue}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoSexo}" for="empleadoSexo" />
+                        <p:inputText id="empleadoSexo" value="#{empleadoController.selected.empleadoSexo}" title="#{myBundle.CreateEmpleadoTitle_empleadoSexo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoFechaCreacion}" for="empleadoFechaCreacion" />
+                        <p:calendar id="empleadoFechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadoController.selected.empleadoFechaCreacion}" title="#{myBundle.CreateEmpleadoTitle_empleadoFechaCreacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoFechaModificacion}" for="empleadoFechaModificacion" />
+                        <p:calendar id="empleadoFechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadoController.selected.empleadoFechaModificacion}" title="#{myBundle.CreateEmpleadoTitle_empleadoFechaModificacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoEstado}" for="empleadoEstado" />
+                        <p:inputText id="empleadoEstado" value="#{empleadoController.selected.empleadoEstado}" title="#{myBundle.CreateEmpleadoTitle_empleadoEstado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_cargoId}" for="cargoId" />
+                        <p:selectOneMenu id="cargoId" value="#{empleadoController.selected.cargoId}"  converter="cargoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cargoController.items}"
+                                           var="cargoIdItem"
+                                           itemValue="#{cargoIdItem}"
+                                           itemLabel="#{cargoIdItem.cargoDescripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empresaId}" for="empresaId" />
+                        <p:selectOneMenu id="empresaId" value="#{empleadoController.selected.empresaId}"  converter="empresaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empresaController.items}"
+                                           var="empresaIdItem"
+                                           itemValue="#{empresaIdItem}"
+                                           itemLabel="#{empresaIdItem.empresaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empleadoController.saveNew}" value="#{myBundle.Save}" update="display,:EmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EmpleadoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

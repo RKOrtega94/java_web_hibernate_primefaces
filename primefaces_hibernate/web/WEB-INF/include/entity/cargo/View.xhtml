@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CargoViewDlg" widgetVar="CargoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCargoTitle}" closeOnEscape="true">
+
+            <h:form id="CargoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{cargoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCargoLabel_cargoId}"/>
+                        <h:outputText value="#{cargoController.selected.cargoId}" title="#{myBundle.ViewCargoTitle_cargoId}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargoLabel_cargoDescripcion}"/>
+                        <h:outputText value="#{cargoController.selected.cargoDescripcion}" title="#{myBundle.ViewCargoTitle_cargoDescripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewCargoLabel_cargoFechaCreacion}"/>
+                        <h:outputText value="#{cargoController.selected.cargoFechaCreacion}" title="#{myBundle.ViewCargoTitle_cargoFechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCargoLabel_cargoFechaModificacion}"/>
+                        <h:outputText value="#{cargoController.selected.cargoFechaModificacion}" title="#{myBundle.ViewCargoTitle_cargoFechaModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewCargoLabel_cargoEstado}"/>
+                        <h:outputText value="#{cargoController.selected.cargoEstado}" title="#{myBundle.ViewCargoTitle_cargoEstado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CargoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UsuarioListPage">
+        <pm:header title="#{myBundle.ListUsuarioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":UsuarioCreatePage:UsuarioCreateForm" actionListener="#{usuarioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:UsuarioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UsuarioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{usuarioController.items}"
+                             var="item"
+                             rowKey="#{item.usuarioId}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{usuarioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{usuarioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{usuarioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('UsuarioListPage:UsuarioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('UsuarioListPage:UsuarioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('UsuarioListPage:UsuarioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.usuarioId}" filterBy="#{item.usuarioId}" headerText="#{myBundle.ListUsuarioTitle_usuarioId}">
+                        <h:outputText value="#{item.usuarioId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.usuarioUsername}" filterBy="#{item.usuarioUsername}" headerText="#{myBundle.ListUsuarioTitle_usuarioUsername}">
+                        <h:outputText value="#{item.usuarioUsername}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.usuarioPassword}" filterBy="#{item.usuarioPassword}" headerText="#{myBundle.ListUsuarioTitle_usuarioPassword}">
+                        <h:outputText value="#{item.usuarioPassword}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.usuarioFechaCreacion}" filterBy="#{item.usuarioFechaCreacion}" headerText="#{myBundle.ListUsuarioTitle_usuarioFechaCreacion}">
+                        <h:outputText value="#{item.usuarioFechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.usuarioFechaModificacion}" filterBy="#{item.usuarioFechaModificacion}" headerText="#{myBundle.ListUsuarioTitle_usuarioFechaModificacion}">
+                        <h:outputText value="#{item.usuarioFechaModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.usuarioEstado}" filterBy="#{item.usuarioEstado}" headerText="#{myBundle.ListUsuarioTitle_usuarioEstado}">
+                        <h:outputText value="#{item.usuarioEstado}"/>
+                    </p:column>
+
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoId.empleadoId}" filterBy="#{item.empleadoId.empleadoId}" headerText="#{myBundle.ListUsuarioTitle_empleadoId}">
+                            <h:outputText value="#{item.empleadoId.empleadoId}"/>
+                        </p:column>
+                    </ui:remove>>
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":UsuarioEditPage:UsuarioEditForm" disabled="#{empty usuarioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:UsuarioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{usuarioController.delete}" update=":growl,datalist" disabled="#{empty usuarioController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty usuarioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.UsuarioHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.UsuarioMenuItem_empleadoId}" icon="ui-icon-search" update=":EmpleadoEditPage:EmpleadoEditForm" disabled="#{empty usuarioController.selected.empleadoId}" actionListener="#{usuarioController.prepareEmpleadoId}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EmpleadoEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

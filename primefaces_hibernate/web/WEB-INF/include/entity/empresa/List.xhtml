@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmpresaListForm">
+
+        <p:panel header="#{myBundle.ListEmpresaTitle}">
+            <p:contextMenu id="EmpresaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EmpresaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EmpresaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EmpresaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpresaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EmpresaMenuItem_empleadoCollection}" icon="ui-icon-search"  action="#{empresaController.navigateEmpleadoCollection}" disabled="#{empresaController.isEmpleadoCollectionEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{empresaController.items}"
+                         lazy="false"
+                         rowKey="#{item.empresaId}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{empresaController.selected}"
+                         filteredValue="#{empresaController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{empresaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.empresaId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmpresaDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmpresaDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpresaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.empresaId}" filterBy="#{item.empresaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empresaRazonSocial}" filterBy="#{item.empresaRazonSocial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaRazonSocial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaRazonSocial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empresaRuc}" filterBy="#{item.empresaRuc}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaRuc}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaRuc}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empresaDireccion}" filterBy="#{item.empresaDireccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaDireccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaDireccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empresaTelefono}" filterBy="#{item.empresaTelefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaTelefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaTelefono}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empresaCorreo}" filterBy="#{item.empresaCorreo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpresaTitle_empresaCorreo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresaCorreo}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.empresaFechaCreacion}" filterBy="#{item.empresaFechaCreacion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEmpresaTitle_empresaFechaCreacion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.empresaFechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.empresaFechaModificacion}" filterBy="#{item.empresaFechaModificacion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEmpresaTitle_empresaFechaModificacion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.empresaFechaModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.empresaEstado}" filterBy="#{item.empresaEstado}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListEmpresaTitle_empresaEstado}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.empresaEstado}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{empresaController.prepareCreate}" update=":EmpresaCreateForm" oncomplete="PF('EmpresaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EmpresaViewForm" oncomplete="PF('EmpresaViewDialog').show()" disabled="#{empty empresaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpresaEditForm" oncomplete="PF('EmpresaEditDialog').show()" disabled="#{empty empresaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empresaController.delete}" update=":growl,datalist" disabled="#{empty empresaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

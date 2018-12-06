@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CargoListPage">
+        <pm:header title="#{myBundle.ListCargoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":CargoCreatePage:CargoCreateForm" actionListener="#{cargoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:CargoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CargoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{cargoController.items}"
+                             var="item"
+                             rowKey="#{item.cargoId}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{cargoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('CargoListPage:CargoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('CargoListPage:CargoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('CargoListPage:CargoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.cargoId}" filterBy="#{item.cargoId}" headerText="#{myBundle.ListCargoTitle_cargoId}">
+                        <h:outputText value="#{item.cargoId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cargoDescripcion}" filterBy="#{item.cargoDescripcion}" headerText="#{myBundle.ListCargoTitle_cargoDescripcion}">
+                        <h:outputText value="#{item.cargoDescripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cargoFechaCreacion}" filterBy="#{item.cargoFechaCreacion}" headerText="#{myBundle.ListCargoTitle_cargoFechaCreacion}">
+                        <h:outputText value="#{item.cargoFechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cargoFechaModificacion}" filterBy="#{item.cargoFechaModificacion}" headerText="#{myBundle.ListCargoTitle_cargoFechaModificacion}">
+                        <h:outputText value="#{item.cargoFechaModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.cargoEstado}" filterBy="#{item.cargoEstado}" headerText="#{myBundle.ListCargoTitle_cargoEstado}">
+                        <h:outputText value="#{item.cargoEstado}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CargoEditPage:CargoEditForm" disabled="#{empty cargoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:CargoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cargoController.delete}" update=":growl,datalist" disabled="#{empty cargoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty cargoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.CargoHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.CargoMenuItem_empleadoCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cargoController.selected.empleadoCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cargoController.navigateEmpleadoCollection()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

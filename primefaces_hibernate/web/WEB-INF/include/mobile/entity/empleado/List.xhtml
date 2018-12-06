@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EmpleadoListPage">
+        <pm:header title="#{myBundle.ListEmpleadoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":EmpleadoCreatePage:EmpleadoCreateForm" actionListener="#{empleadoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:EmpleadoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EmpleadoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{empleadoController.items}"
+                             var="item"
+                             rowKey="#{item.empleadoId}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             selectionMode="single"
+                             selection="#{empleadoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{empleadoController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{empleadoController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('EmpleadoListPage:EmpleadoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('EmpleadoListPage:EmpleadoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('EmpleadoListPage:EmpleadoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.empleadoId}" filterBy="#{item.empleadoId}" headerText="#{myBundle.ListEmpleadoTitle_empleadoId}">
+                        <h:outputText value="#{item.empleadoId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empleadoPrimerNombre}" filterBy="#{item.empleadoPrimerNombre}" headerText="#{myBundle.ListEmpleadoTitle_empleadoPrimerNombre}">
+                        <h:outputText value="#{item.empleadoPrimerNombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empleadoSegundoNombre}" filterBy="#{item.empleadoSegundoNombre}" headerText="#{myBundle.ListEmpleadoTitle_empleadoSegundoNombre}">
+                        <h:outputText value="#{item.empleadoSegundoNombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empleadoPrimerApellido}" filterBy="#{item.empleadoPrimerApellido}" headerText="#{myBundle.ListEmpleadoTitle_empleadoPrimerApellido}">
+                        <h:outputText value="#{item.empleadoPrimerApellido}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empleadoSegundoApellido}" filterBy="#{item.empleadoSegundoApellido}" headerText="#{myBundle.ListEmpleadoTitle_empleadoSegundoApellido}">
+                        <h:outputText value="#{item.empleadoSegundoApellido}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empleadoTipoDni}" filterBy="#{item.empleadoTipoDni}" headerText="#{myBundle.ListEmpleadoTitle_empleadoTipoDni}">
+                        <h:outputText value="#{item.empleadoTipoDni}"/>
+                    </p:column>
+
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoDni}" filterBy="#{item.empleadoDni}" headerText="#{myBundle.ListEmpleadoTitle_empleadoDni}">
+                            <h:outputText value="#{item.empleadoDni}"/>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoEstadoCivil}" filterBy="#{item.empleadoEstadoCivil}" headerText="#{myBundle.ListEmpleadoTitle_empleadoEstadoCivil}">
+                            <h:outputText value="#{item.empleadoEstadoCivil}"/>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoNombreConyugue}" filterBy="#{item.empleadoNombreConyugue}" headerText="#{myBundle.ListEmpleadoTitle_empleadoNombreConyugue}">
+                            <h:outputText value="#{item.empleadoNombreConyugue}"/>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoSexo}" filterBy="#{item.empleadoSexo}" headerText="#{myBundle.ListEmpleadoTitle_empleadoSexo}">
+                            <h:outputText value="#{item.empleadoSexo}"/>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoFechaCreacion}" filterBy="#{item.empleadoFechaCreacion}" headerText="#{myBundle.ListEmpleadoTitle_empleadoFechaCreacion}">
+                            <h:outputText value="#{item.empleadoFechaCreacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoFechaModificacion}" filterBy="#{item.empleadoFechaModificacion}" headerText="#{myBundle.ListEmpleadoTitle_empleadoFechaModificacion}">
+                            <h:outputText value="#{item.empleadoFechaModificacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empleadoEstado}" filterBy="#{item.empleadoEstado}" headerText="#{myBundle.ListEmpleadoTitle_empleadoEstado}">
+                            <h:outputText value="#{item.empleadoEstado}"/>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.cargoId.cargoDescripcion}" filterBy="#{item.cargoId.cargoDescripcion}" headerText="#{myBundle.ListEmpleadoTitle_cargoId}">
+                            <h:outputText value="#{item.cargoId.cargoDescripcion}"/>
+                        </p:column>
+                    </ui:remove>>
+                    <ui:remove>
+                        <p:column sortBy="#{item.empresaId.empresaId}" filterBy="#{item.empresaId.empresaId}" headerText="#{myBundle.ListEmpleadoTitle_empresaId}">
+                            <h:outputText value="#{item.empresaId.empresaId}"/>
+                        </p:column>
+                    </ui:remove>>
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadoEditPage:EmpleadoEditForm" disabled="#{empty empleadoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:EmpleadoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadoController.delete}" update=":growl,datalist" disabled="#{empty empleadoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty empleadoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.EmpleadoHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.EmpleadoMenuItem_cargoId}" icon="ui-icon-search" update=":CargoEditPage:CargoEditForm" disabled="#{empty empleadoController.selected.cargoId}" actionListener="#{empleadoController.prepareCargoId}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:CargoEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.EmpleadoMenuItem_empresaId}" icon="ui-icon-search" update=":EmpresaEditPage:EmpresaEditForm" disabled="#{empty empleadoController.selected.empresaId}" actionListener="#{empleadoController.prepareEmpresaId}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EmpresaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.EmpleadoMenuItem_usuarioCollection}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty empleadoController.selected.usuarioCollection}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{empleadoController.navigateUsuarioCollection()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

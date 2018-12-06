@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EmpresaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditEmpresaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EmpresaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EmpresaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{empresaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditEmpresaLabel_empresaId}" for="empresaId" />
+                            <h:outputText id="empresaId" value="#{empresaController.selected.empresaId}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaRazonSocial}" for="empresaRazonSocial" />
+                            <p:inputText id="empresaRazonSocial" value="#{empresaController.selected.empresaRazonSocial}" title="#{myBundle.EditEmpresaTitle_empresaRazonSocial}" size="250" maxlength="250"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaRuc}" for="empresaRuc" />
+                            <p:inputText id="empresaRuc" value="#{empresaController.selected.empresaRuc}" title="#{myBundle.EditEmpresaTitle_empresaRuc}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaDireccion}" for="empresaDireccion" />
+                            <p:inputText id="empresaDireccion" value="#{empresaController.selected.empresaDireccion}" title="#{myBundle.EditEmpresaTitle_empresaDireccion}" size="250" maxlength="250"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaTelefono}" for="empresaTelefono" />
+                            <p:inputText id="empresaTelefono" value="#{empresaController.selected.empresaTelefono}" title="#{myBundle.EditEmpresaTitle_empresaTelefono}" size="15" maxlength="15"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaCorreo}" for="empresaCorreo" />
+                            <p:inputText id="empresaCorreo" value="#{empresaController.selected.empresaCorreo}" title="#{myBundle.EditEmpresaTitle_empresaCorreo}" size="200" maxlength="200"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaFechaCreacion}" for="empresaFechaCreacion" />
+                            <p:calendar id="empresaFechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empresaController.selected.empresaFechaCreacion}" title="#{myBundle.EditEmpresaTitle_empresaFechaCreacion}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaFechaModificacion}" for="empresaFechaModificacion" />
+                            <p:calendar id="empresaFechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empresaController.selected.empresaFechaModificacion}" title="#{myBundle.EditEmpresaTitle_empresaFechaModificacion}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEmpresaLabel_empresaEstado}" for="empresaEstado" />
+                            <p:inputText id="empresaEstado" value="#{empresaController.selected.empresaEstado}" title="#{myBundle.EditEmpresaTitle_empresaEstado}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{empresaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:EmpresaListPage:EmpresaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:EmpresaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

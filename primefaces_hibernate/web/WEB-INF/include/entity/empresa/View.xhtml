@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaViewDlg" widgetVar="EmpresaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="EmpresaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{empresaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaId}"/>
+                        <h:outputText value="#{empresaController.selected.empresaId}" title="#{myBundle.ViewEmpresaTitle_empresaId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaRazonSocial}"/>
+                        <h:outputText value="#{empresaController.selected.empresaRazonSocial}" title="#{myBundle.ViewEmpresaTitle_empresaRazonSocial}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaRuc}"/>
+                        <h:outputText value="#{empresaController.selected.empresaRuc}" title="#{myBundle.ViewEmpresaTitle_empresaRuc}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaDireccion}"/>
+                        <h:outputText value="#{empresaController.selected.empresaDireccion}" title="#{myBundle.ViewEmpresaTitle_empresaDireccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaTelefono}"/>
+                        <h:outputText value="#{empresaController.selected.empresaTelefono}" title="#{myBundle.ViewEmpresaTitle_empresaTelefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaCorreo}"/>
+                        <h:outputText value="#{empresaController.selected.empresaCorreo}" title="#{myBundle.ViewEmpresaTitle_empresaCorreo}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaFechaCreacion}"/>
+                        <h:outputText value="#{empresaController.selected.empresaFechaCreacion}" title="#{myBundle.ViewEmpresaTitle_empresaFechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaFechaModificacion}"/>
+                        <h:outputText value="#{empresaController.selected.empresaFechaModificacion}" title="#{myBundle.ViewEmpresaTitle_empresaFechaModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpresaLabel_empresaEstado}"/>
+                        <h:outputText value="#{empresaController.selected.empresaEstado}" title="#{myBundle.ViewEmpresaTitle_empresaEstado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpresaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{usuarioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_usuarioUsername}" for="usuarioUsername" />
+                        <p:inputText id="usuarioUsername" value="#{usuarioController.selected.usuarioUsername}" title="#{myBundle.CreateUsuarioTitle_usuarioUsername}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_usuarioPassword}" for="usuarioPassword" />
+                        <p:inputText id="usuarioPassword" value="#{usuarioController.selected.usuarioPassword}" title="#{myBundle.CreateUsuarioTitle_usuarioPassword}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_usuarioFechaCreacion}" for="usuarioFechaCreacion" />
+                        <p:calendar id="usuarioFechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.usuarioFechaCreacion}" title="#{myBundle.CreateUsuarioTitle_usuarioFechaCreacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_usuarioFechaModificacion}" for="usuarioFechaModificacion" />
+                        <p:calendar id="usuarioFechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.usuarioFechaModificacion}" title="#{myBundle.CreateUsuarioTitle_usuarioFechaModificacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_usuarioEstado}" for="usuarioEstado" />
+                        <p:inputText id="usuarioEstado" value="#{usuarioController.selected.usuarioEstado}" title="#{myBundle.CreateUsuarioTitle_usuarioEstado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{usuarioController.selected.empleadoId}"  converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.empleadoId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.saveNew}" value="#{myBundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuarioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UsuarioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

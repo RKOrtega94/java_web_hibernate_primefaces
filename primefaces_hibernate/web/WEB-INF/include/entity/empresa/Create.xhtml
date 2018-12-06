@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaCreateDlg" widgetVar="EmpresaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="EmpresaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{empresaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaRazonSocial}" for="empresaRazonSocial" />
+                        <p:inputText id="empresaRazonSocial" value="#{empresaController.selected.empresaRazonSocial}" title="#{myBundle.CreateEmpresaTitle_empresaRazonSocial}" size="250" maxlength="250"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaRuc}" for="empresaRuc" />
+                        <p:inputText id="empresaRuc" value="#{empresaController.selected.empresaRuc}" title="#{myBundle.CreateEmpresaTitle_empresaRuc}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaDireccion}" for="empresaDireccion" />
+                        <p:inputText id="empresaDireccion" value="#{empresaController.selected.empresaDireccion}" title="#{myBundle.CreateEmpresaTitle_empresaDireccion}" size="250" maxlength="250"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaTelefono}" for="empresaTelefono" />
+                        <p:inputText id="empresaTelefono" value="#{empresaController.selected.empresaTelefono}" title="#{myBundle.CreateEmpresaTitle_empresaTelefono}" size="15" maxlength="15"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaCorreo}" for="empresaCorreo" />
+                        <p:inputText id="empresaCorreo" value="#{empresaController.selected.empresaCorreo}" title="#{myBundle.CreateEmpresaTitle_empresaCorreo}" size="200" maxlength="200"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaFechaCreacion}" for="empresaFechaCreacion" />
+                        <p:calendar id="empresaFechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empresaController.selected.empresaFechaCreacion}" title="#{myBundle.CreateEmpresaTitle_empresaFechaCreacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaFechaModificacion}" for="empresaFechaModificacion" />
+                        <p:calendar id="empresaFechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{empresaController.selected.empresaFechaModificacion}" title="#{myBundle.CreateEmpresaTitle_empresaFechaModificacion}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpresaLabel_empresaEstado}" for="empresaEstado" />
+                        <p:inputText id="empresaEstado" value="#{empresaController.selected.empresaEstado}" title="#{myBundle.CreateEmpresaTitle_empresaEstado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empresaController.saveNew}" value="#{myBundle.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpresaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EmpresaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

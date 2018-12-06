@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UsuarioEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditUsuarioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:UsuarioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UsuarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{usuarioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditUsuarioLabel_usuarioId}" for="usuarioId" />
+                            <h:outputText id="usuarioId" value="#{usuarioController.selected.usuarioId}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuarioLabel_usuarioUsername}" for="usuarioUsername" />
+                            <p:inputText id="usuarioUsername" value="#{usuarioController.selected.usuarioUsername}" title="#{myBundle.EditUsuarioTitle_usuarioUsername}" size="50" maxlength="50"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuarioLabel_usuarioPassword}" for="usuarioPassword" />
+                            <p:inputText id="usuarioPassword" value="#{usuarioController.selected.usuarioPassword}" title="#{myBundle.EditUsuarioTitle_usuarioPassword}" size="50" maxlength="50"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuarioLabel_usuarioFechaCreacion}" for="usuarioFechaCreacion" />
+                            <p:calendar id="usuarioFechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.usuarioFechaCreacion}" title="#{myBundle.EditUsuarioTitle_usuarioFechaCreacion}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuarioLabel_usuarioFechaModificacion}" for="usuarioFechaModificacion" />
+                            <p:calendar id="usuarioFechaModificacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.usuarioFechaModificacion}" title="#{myBundle.EditUsuarioTitle_usuarioFechaModificacion}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuarioLabel_usuarioEstado}" for="usuarioEstado" />
+                            <p:inputText id="usuarioEstado" value="#{usuarioController.selected.usuarioEstado}" title="#{myBundle.EditUsuarioTitle_usuarioEstado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUsuarioLabel_empleadoId}" for="empleadoId" />
+                            <p:selectOneMenu id="empleadoId" value="#{usuarioController.selected.empleadoId}"  converter="empleadoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{empleadoController.items}"
+                                               var="empleadoIdItem"
+                                               itemValue="#{empleadoIdItem}"
+                                               itemLabel="#{empleadoIdItem.empleadoId.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{usuarioController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:UsuarioListPage:UsuarioListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:UsuarioListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
